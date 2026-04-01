@@ -57,3 +57,38 @@ export function initHeatmapHistory(map) {
 
     btn.onclick = () => playHeatmapHistory(map);
 }
+export function initDebugPanel() {
+    const fpsEl = document.getElementById("fps");
+    const cpuEl = document.getElementById("cpu");
+    const renderEl = document.getElementById("render");
+
+    let last = performance.now();
+    let frames = 0;
+
+    function loop() {
+        const now = performance.now();
+        frames++;
+
+        if (now - last >= 1000) {
+            fpsEl.textContent = frames;
+            frames = 0;
+            last = now;
+        }
+
+        const cpu = (performance.now() - now).toFixed(2);
+        cpuEl.textContent = cpu;
+
+        requestAnimationFrame(loop);
+    }
+
+    loop();
+
+    // Temps de rendu Leaflet
+    map.on("layeradd layerremove moveend zoomend", () => {
+        const t0 = performance.now();
+        requestAnimationFrame(() => {
+            const t1 = performance.now();
+            renderEl.textContent = (t1 - t0).toFixed(2);
+        });
+    });
+}
