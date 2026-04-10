@@ -18,7 +18,7 @@ const log = (...a) => IS_DEV && console.log("[CONFIG]", ...a);
 // Ces URLs sont centralisées ici pour éviter les doublons
 // ======================================================
 
-export const PROXY = "https://proxy-eblg.onrender.com";
+export const PROXY = "https://eblg-dashboard-v84.onrender.com";
 
 export const ENDPOINTS = {
     metar: `${PROXY}/metar`,
